@@ -7,7 +7,6 @@
 3. Add the contents of slack-service-notification.conf to your templates.conf (or keep it separate depending on your setup)
 4. Add the contents of slack-service-notification-command.conf to your commands.conf (or keep it separate depending on your setup)
 5. Add an entry to your notifications.conf (see example below)
-
 ```
 apply Notification "slack" to Service {
   import "slack-service-notification"
@@ -16,9 +15,7 @@ apply Notification "slack" to Service {
   assign where host.vars.sla == "24x7"
 }
 ```
-
 6. Set up a new user and usergroup
-
 ```
 object User "oncall_alerts" {
   import "generic-user"
