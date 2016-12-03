@@ -17,6 +17,6 @@ else
 fi
 
 #Send message to Slack
-PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} HOST: <http://${ICINGA_HOSTNAME}:${ICINGA_PORT}/icingaweb2/monitoring/host/services?host=${HOSTNAME}|${HOSTDISPLAYNAME}>  STATE: ${HOSTSTATE}\n\n Additional Info: ${HOSTOUTPUT}\"}"
+PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} HOST: <http://${ICINGA_HOSTNAME}:${ICINGA_PORT}/icingaweb2/monitoring/host/show?host=${HOSTNAME}|${HOSTDISPLAYNAME}>  STATE: ${HOSTSTATE}\n\n Additional Info: ${HOSTOUTPUT}\"}"
 
 curl --connect-timeout 30 --max-time 60 -s -S -X POST --data-urlencode "${PAYLOAD}" "${SLACK_WEBHOOK_URL}"
