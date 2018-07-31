@@ -34,7 +34,7 @@ read -d '' PAYLOAD << EOF
       "fields": [
         {
           "title": "Service output",
-          "value": "${SERVICEPUTPUT}",
+          "value": "${SERVICEPOUTPUT}",
           "short": false
         },
         {
