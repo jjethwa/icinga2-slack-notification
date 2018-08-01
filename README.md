@@ -1,6 +1,12 @@
 # icinga2-slack-notification
 
-###Your setup may vary, so some of the config files included here may need to be tweaked
+Example:
+
+![alt text](https://user-images.githubusercontent.com/1058480/43542720-ca579cc6-959b-11e8-889b-dfa6c9b0dce4.png "Slack screenshot")
+
+Thanks to @dverkade for the updated template and screenshot :smile:
+
+### Your setup may vary, so some of the config files included here may need to be tweaked
 
 1. Set up a new incoming webhook /services/new/incoming-webhook for your team
 2. Add slack-service-notification.sh to /etc/icinga2/scripts directory
