@@ -8,15 +8,43 @@ SLACK_BOTNAME="icinga2"
 #Set the message icon based on ICINGA Host state
 if [ "$HOSTSTATE" = "DOWN" ]
 then
-    ICON=":bomb:"
+    COLOR="danger"
 elif [ "$HOSTSTATE" = "UP" ]
 then
-    ICON=":beer:"
+    COLOR="good"
 else
-    ICON=":white_medium_square:"
+    COLOR=""
 fi
 
 #Send message to Slack
-PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} HOST: <http://${ICINGA_HOSTNAME}:${ICINGA_PORT}/icingaweb2/monitoring/host/show?host=${HOSTNAME}|${HOSTDISPLAYNAME}>  STATE: ${HOSTSTATE}\n\n Additional Info: ${HOSTOUTPUT}\"}"
+read -d '' PAYLOAD << EOF
+{
+  "channel": "${SLACK_CHANNEL}",
+  "username": "${SLACK_BOTNAME}",
+  "attachments": [
+    {
+      "fallback": "${HOSTSTATE}: ${HOSTDISPLAYNAME}",
+      "color": "${COLOR}",
+      "fields": [
+        {
+          "title": "Info",
+          "value": "${HOSTOUTPUT}",
+          "short": false
+        },
+        {
+          "title": "Host",
+          "value": "<${ICINGA_HOSTNAME}/monitoring/host/services?host=${HOSTNAME}|${HOSTDISPLAYNAME}>",
+          "short": true
+        },
+        {
+          "title": "State",
+          "value": "${HOSTSTATE}",
+          "short": true
+        }
+      ]
+    }
+  ]
+}
+EOF
 
-curl --connect-timeout 30 --max-time 60 -s -S -X POST --data-urlencode "${PAYLOAD}" "${SLACK_WEBHOOK_URL}"
+curl --connect-timeout 30 --max-time 60 -s -S -X POST -H 'Content-type: application/json' --data "${PAYLOAD}" "${SLACK_WEBHOOK_URL}"
