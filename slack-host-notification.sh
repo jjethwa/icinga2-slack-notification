@@ -88,4 +88,6 @@ read -d '' PAYLOAD << EOF
 }
 EOF
 
+fi
+
 curl --connect-timeout 30 --max-time 60 -s -S -X POST -H 'Content-type: application/json' --data "${PAYLOAD}" "${SLACK_WEBHOOK_URL}"
